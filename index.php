@@ -18,7 +18,7 @@ function respond(Stream $stream)
         }
 
         while (!$stream->eof()) {
-            print $stream->read(Stream::CHUNK_SIZE);
+            echo $stream->read(Stream::CHUNK_SIZE);
 
             if (connection_status() != CONNECTION_NORMAL) {
                 break;
@@ -27,12 +27,21 @@ function respond(Stream $stream)
     }
 }
 
+$testModel = [
+    'test1' => 'Variable for testing.',
+    'test2' => 'Hello world'
+];
+
+function render(string $templateName, $model)
+{
+    ob_start();
+    include($templateName);
+    return ob_get_clean();
+}
+
 $stream = new Stream(fopen('php://temp', 'r+'));
+$stream->write(
+    render('test.php', $testModel)
+);
 
-$stream->write('test');
-//respond($stream);
-?>
-
-<pre>
-    <?php print_r($stream); ?>
-</pre>
+respond($stream);
