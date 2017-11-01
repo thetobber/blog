@@ -187,8 +187,11 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $name
-     * @return self
+     * Clone and returns the instance without the specified header. The header 
+     * name is checked case-insensitive.
+     * 
+     * @param string $name Name of the header to remove.
+     * @return self Returns a cloned instance without the header.
      */
     public function withoutHeader(string $name): self
     {
