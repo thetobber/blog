@@ -1,0 +1,2 @@
+Header always set X-Content-Type-Options "nosniff"
+Header unset X-Powered-By
