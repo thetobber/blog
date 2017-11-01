@@ -123,11 +123,14 @@ abstract class AbstractMessage
     }
 
     /**
+     * Clone and returns the instance with the specified and value. If the 
+     * header does not exist in the message it will be added. If the header 
+     * exists it will be replaced.
      * 
      * @link https://regex101.com/r/VqHPJD/1 /^[a-z]+(?>-[a-z]+)*$/i
-     * @param string $name
-     * @param string[]|string $value
-     * @return self
+     * @param string $name Name of the message header.
+     * @param string[]|string $value Value(s) to add with the header.
+     * @return self Returns a cloned instance with the header.
      */
     public function withHeader(string $name, $value): self
     {
@@ -162,9 +165,13 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $name
-     * @param string[]|string $value
-     * @return self
+     * Clone and returns the instance with the specified and value. If the 
+     * header does not exist it will be added. If the header does exist the 
+     * will be added to the existing header insead.
+     * 
+     * @param string $name Name of the message header.
+     * @param string[]|string $value Value(s) to add with the header.
+     * @return self Returns a cloned instance with the header or new value.
      */
     public function withAddedHeader(string $name, $value): self
     {
