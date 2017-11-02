@@ -27,21 +27,48 @@ function respond(Stream $stream)
     }
 }
 
-$testModel = [
-    'test1' => 'Variable for testing.',
-    'test2' => 'Hello world'
-];
-
-function render(string $templateName, $model)
+abstract class AbstractController
 {
-    ob_start();
-    include($templateName);
-    return ob_get_clean();
+    protected function render(string $filePath, $model): string
+    {
+        ob_start();
+        include($filePath);
+        return ob_get_clean();
+    }
 }
 
+class Controller extends AbstractController
+{
+    public function index(): string
+    {
+        $model = [
+            'test1' => 'Variable for testing.',
+            'test2' => 'Hello world'
+        ];
+
+        return $this->render('test.php', $model);
+    }
+}
+
+class Route
+{
+    protected $action;
+
+    public function __construct(callable $action)
+    {
+        $this->action = $action;
+    }
+
+    public function callAction()
+    {
+        return call_user_func($this->action);
+    }
+}
+
+$controller = new Controller();
+$route = new Route([$controller, 'index']);
+
 $stream = new Stream(fopen('php://temp', 'r+'));
-$stream->write(
-    render('test.php', $testModel)
-);
+$stream->write($route->callAction());
 
 respond($stream);
