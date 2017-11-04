@@ -8,7 +8,8 @@ use Blog\Message\AbstractMessage;
 function respond(Stream $stream)
 {
     $size = $stream->getSize();
-    header("Content-Type: text/html;charset=UTF-8");
+    header('Content-Type: text/html;charset=UTF-8');
+    //header('Content-Encoding: gzip');
 
     if ($size !== null) {
         header("Content-Length: $size");
@@ -34,6 +35,8 @@ abstract class AbstractController
         ob_start();
         include($filePath);
         return ob_get_clean();
+        //$contents = ob_get_clean();
+        //return gzencode($contents, 9);
     }
 }
 
