@@ -11,10 +11,11 @@ abstract class AbstractMessage
      *
      * @var array
      */
-    const PROTOCOL_VERSIONS = array(
+    const PROTOCOL_VERSIONS = [
         '1.0' => true,
-        '1.1' => true
-    );
+        '1.1' => true,
+        '2.0' => true
+    ];
 
     /**
      * HTTP version of the message.
@@ -24,16 +25,16 @@ abstract class AbstractMessage
     protected $protocolVersion = '1.1';
 
     /**
-     * All HTTP headers of the message with lowercased keys.
-     *
-     * @var array
+     * Contains the HTTP headers with their names as lower case.
+     * 
+     * @var array[string[]]
      */
     protected $headers; //Contains headers as lowercase
 
     /**
-     * All HTTP headers of the message with their original casing. Notice that
-     * headers fetched from the $_SERVER super global will be formatted
-     * accordingly to the HTTP standard. This is because headers from PHP is
+     * All HTTP headers of the message with their original case. Notice that
+     * headers fetched from the $_SERVER super global will not be formatted
+     * accordingly with the HTTP standard. This is because headers from PHP is
      * formatted to comply with the CGI standards.
      *
      * @var array
@@ -88,7 +89,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * Checks whether the given message header exists. The check is peformed 
+     * Checks whether the given message header exists. The check is peformed
      * case-insensitive.
      *
      * @param string $name Name of the header field.
@@ -101,7 +102,7 @@ abstract class AbstractMessage
 
     /**
      * Retrieves the values from a single message header as an array.
-     * 
+     *
      * @param string $name Name of the header field.
      * @return array Returns an array of the message header values.
      */
@@ -111,8 +112,8 @@ abstract class AbstractMessage
     }
 
     /**
-     * 
-     * 
+     *
+     *
      * @param string $name
      * @return string
      */
@@ -123,10 +124,10 @@ abstract class AbstractMessage
     }
 
     /**
-     * Clone and returns the instance with the specified and value. If the 
-     * header does not exist in the message it will be added. If the header 
+     * Clone and returns the instance with the specified and value. If the
+     * header does not exist in the message it will be added. If the header
      * exists it will be replaced.
-     * 
+     *
      * @link https://regex101.com/r/VqHPJD/1 /^[a-z]+(?>-[a-z]+)*$/i
      * @param string $name Name of the message header.
      * @param string[]|string $value Value(s) to add with the header.
@@ -139,7 +140,7 @@ abstract class AbstractMessage
         Accept or X-UA-Compatible.
         */
         if (preg_match('/^[a-z]+(?>-[a-z]+)*$/i', $name) === 0) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('Argument $name must be a valid HTTP header');
         }
 
         $clone = clone $this;
@@ -165,10 +166,10 @@ abstract class AbstractMessage
     }
 
     /**
-     * Clone and returns the instance with the specified and value. If the 
-     * header does not exist it will be added. If the header does exist the 
+     * Clone and returns the instance with the specified and value. If the
+     * header does not exist it will be added. If the header does exist the
      * will be added to the existing header insead.
-     * 
+     *
      * @param string $name Name of the message header.
      * @param string[]|string $value Value(s) to add with the header.
      * @return self Returns a cloned instance with the header or new value.
@@ -187,9 +188,9 @@ abstract class AbstractMessage
     }
 
     /**
-     * Clone and returns the instance without the specified header. The header 
+     * Clone and returns the instance without the specified header. The header
      * name is checked case-insensitive.
-     * 
+     *
      * @param string $name Name of the header to remove.
      * @return self Returns a cloned instance without the header.
      */
