@@ -1,5 +1,5 @@
 <?php
-namespace Blog\Message;
+namespace Application\Libraries\Message;
 
 use RuntimeException;
 use InvalidArgumentException;

@@ -1,5 +1,5 @@
 <?php
-namespace Blog\Message\Interfaces;
+namespace Application\Libraries\Message\Interfaces;
 
 /**
  * @link https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php

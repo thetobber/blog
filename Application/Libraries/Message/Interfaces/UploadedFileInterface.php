@@ -1,7 +1,7 @@
 <?php
-namespace Blog\Message\Interfaces;
+namespace Application\Libraries\Message\Interfaces;
 
-use Blog\Message\Interfaces\StreamInterface;
+use Application\Libraries\Message\Interfaces\StreamInterface;
 
 /**
  * @link https://github.com/php-fig/http-message/blob/master/src/UploadedFileInterface.php

@@ -1,7 +1,7 @@
 <?php
-namespace Blog\Message\Interfaces;
+namespace Application\Libraries\Message\Interfaces;
 
-use Blog\Message\Interfaces\MessageInterface;
+use Application\Libraries\Message\Interfaces\MessageInterface;
 
 /**
  * @link https://github.com/php-fig/http-message/blob/master/src/ResponseInterface.php

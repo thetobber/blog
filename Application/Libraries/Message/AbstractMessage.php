@@ -1,11 +1,9 @@
 <?php
-namespace Blog\Message;
+namespace Application\Libraries\Message;
 
 use InvalidArgumentException;
-use Blog\Message\Stream;
-
-use Blog\Message\Interfaces\MessageInterface;
-use Blog\Message\Interfaces\StreamInterface;
+use Application\Libraries\Message\Interfaces\MessageInterface;
+use Application\Libraries\Message\Interfaces\StreamInterface;
 
 abstract class AbstractMessage implements MessageInterface
 {
@@ -194,7 +192,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function withBody(Stream $body): MessageInterface
+    public function withBody(StreamInterface $body): MessageInterface
     {
         $clone = clone $this;
         $clone->body = $body;

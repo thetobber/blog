@@ -1,7 +1,7 @@
 <?php
-namespace Blog\Message\Interfaces;
+namespace Application\Libraries\Message\Interfaces;
 
-use Blog\Message\Interfaces\StreamInterface;
+use Application\Libraries\Message\Interfaces\StreamInterface;
 
 /**
  * HTTP messages consist of requests from a client to a server and responses
