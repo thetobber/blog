@@ -1,6 +1,9 @@
 <?php
 namespace Blog\Message\Interfaces;
 
+/**
+ * @link https://github.com/php-fig/http-message/blob/master/src/StreamInterface.php
+ */
 interface StreamInterface
 {
     public function __toString(): string;
