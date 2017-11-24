@@ -1,5 +1,6 @@
 <?php
-//declare(strict_types = 1);
+declare(strict_types = 1);
+define('VIEWS_DIR', __DIR__.'/Views');
 
 use Application\Libraries\Message\Stream;
 use Application\Libraries\Routing\Route;

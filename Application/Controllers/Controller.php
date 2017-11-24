@@ -12,6 +12,6 @@ class Controller extends AbstractController
             'test2' => 'Hello world'
         ];
 
-        return $this->render(dirname(__DIR__).'/Views/Index.php', $model);
+        return $this->render('/Index.php', $model);
     }
 }

@@ -9,6 +9,5 @@
 <body>
     <h1>Test</h1>
     <?php var_dump($model) ?>
-    <?php var_dump('$model') ?>
 </body>
 </html>
