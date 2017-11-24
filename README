@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+    ServerAdmin Toby
+    ServerName blog.local
+    ServerAlias www.blog.local
+    DocumentRoot "C:/Projects/Blog"
+
+	<Directory "C:/Projects/Blog/">
+        RewriteEngine On
+        RewriteCond %{REQUEST_URI} !/Static
+        RewriteRule ^ index.php [QSA,L]
+        Options -Indexes -Includes +FollowSymLinks -MultiViews
+        AllowOverride All
+		Require local granted
+	</Directory>
+</VirtualHost>
