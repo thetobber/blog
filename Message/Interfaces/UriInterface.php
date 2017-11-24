@@ -15,11 +15,11 @@ interface UriInterface
     public function getPath(): string;
     public function getQuery(): string;
     public function getFragment(): string;
-    public function withScheme(string $scheme): UriInterface;
-    public function withUserInfo(string $user, ?string $password): UriInterface;
-    public function withHost(string $host): UriInterface;
-    public function withPort(?int $port): UriInterface;
-    public function withPath(string $path): UriInterface;
-    public function withQuery(string $query): UriInterface;
-    public function withFragment(string $fragment): UriInterface;
+    public function withScheme(string $scheme);
+    public function withUserInfo(string $user, ?string $password);
+    public function withHost(string $host);
+    public function withPort(?int $port);
+    public function withPath(string $path);
+    public function withQuery(string $query);
+    public function withFragment(string $fragment);
 }
