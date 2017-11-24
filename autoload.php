@@ -15,8 +15,9 @@ $classMap = [
     'Application\\Libraries\\Message\\Uri'                                  => '/Application/Libraries/Message/Uri.php',
     'Application\\Libraries\\Message\\AbstractMessage'                      => '/Application/Libraries/Message/AbstractMessage.php',
 
-    'Application\\Libraries\\AbstractController'                            => '/Application/Libraries/AbstractController.php',
     'Application\\Libraries\\Routing\\Route'                                => '/Application/Libraries/Routing/Route.php',
+    'Application\\Libraries\\Structure\\AbstractController'                 => '/Application/Libraries/Structure/AbstractController.php',
+    'Application\\Libraries\\Structure\\AbstractRepository'                 => '/Application/Libraries/Structure/AbstractRepository.php',
 
     'Application\\Controllers\\Controller'                                  => '/Application/Controllers/Controller.php'
 ];
