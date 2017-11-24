@@ -6,6 +6,7 @@ namespace Blog\Message\Interfaces;
  */
 interface UriInterface
 {
+    public function __toString(): string;
     public function getScheme(): string;
     public function getAuthority(): string;
     public function getUserInfo(): string;
@@ -21,5 +22,4 @@ interface UriInterface
     public function withPath(string $path): UriInterface;
     public function withQuery(string $query): UriInterface;
     public function withFragment(string $fragment): UriInterface;
-    public function __toString(): string;
 }
