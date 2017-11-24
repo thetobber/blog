@@ -11,6 +11,6 @@ $classMap = [
 
 spl_autoload_register(function ($className) use ($classMap) {
     if (isset($classMap[$className])) {
-        require_once(__DIR__.$classMap[$className]);
+        require(__DIR__.$classMap[$className]);
     }
 }, true, true);

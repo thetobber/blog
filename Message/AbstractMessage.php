@@ -4,17 +4,21 @@ namespace Blog\Message;
 use InvalidArgumentException;
 use Blog\Message\Stream;
 
-abstract class AbstractMessage
+use Blog\Message\Interfaces\MessageInterface;
+use Blog\Message\Interfaces\StreamInterface;
+
+abstract class AbstractMessage implements MessageInterface
 {
     /**
      * Accepted versions of the HTTP protocol for this implementation.
      *
      * @var array
      */
-    const PROTOCOL_VERSIONS = array(
+    const PROTOCOL_VERSIONS = [
         '1.0' => true,
-        '1.1' => true
-    );
+        '1.1' => true,
+        '2.0' => true
+    ];
 
     /**
      * HTTP version of the message.
@@ -24,19 +28,19 @@ abstract class AbstractMessage
     protected $protocolVersion = '1.1';
 
     /**
-     * All HTTP headers of the message with lowercased keys.
+     * Contains the HTTP headers with their names as lower case.
      *
-     * @var array
+     * @var string[][]
      */
     protected $headers; //Contains headers as lowercase
 
     /**
-     * All HTTP headers of the message with their original casing. Notice that
-     * headers fetched from the $_SERVER super global will be formatted
-     * accordingly to the HTTP standard. This is because headers from PHP is
+     * All HTTP headers of the message with their original case. Notice that
+     * headers fetched from the $_SERVER super global will not be formatted
+     * accordingly with the HTTP standard. This is because headers from PHP is
      * formatted to comply with the CGI standards.
      *
-     * @var array
+     * @var string[][]
      */
     protected $headerLines; //Headers with their original case
 
@@ -48,9 +52,7 @@ abstract class AbstractMessage
     protected $body;
 
     /**
-     * Get the protocol version.
-     *
-     * @return string Returns the protocol version.
+     * @inheritDoc
      */
     public function getProtocolVersion(): string
     {
@@ -58,13 +60,9 @@ abstract class AbstractMessage
     }
 
     /**
-     * Clone the instance with a new protocol version.
-     *
-     * @param string $version The protocol version to use e.g. "1.0" or "1.1".
-     * @return self Returns a cloned instance with a new protocol version.
-     * @throws InvalidArgumentException on invalid protocol version.
+     * @inheritDoc
      */
-    public function withProtocolVersion(string $version): self
+    public function withProtocolVersion(string $version): MessageInterface
     {
         if (!isset(self::PROTOCOL_VERSIONS[$version])) {
             throw new InvalidArgumentException();
@@ -77,10 +75,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * Retrieves all HTTP headers for the message.
-     *
-     * @return array Returns an associative array of the HTTP headers container
-     *   container in the message.
+     * @inheritDoc
      */
     public function getHeaders(): array
     {
@@ -88,11 +83,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * Checks whether the given message header exists. The check is peformed 
-     * case-insensitive.
-     *
-     * @param string $name Name of the header field.
-     * @return bool Returns true if the header exists and false if it does not.
+     * @inheritDoc
      */
     public function hasHeader(string $name): bool
     {
@@ -100,10 +91,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * Retrieves the values from a single message header as an array.
-     * 
-     * @param string $name Name of the header field.
-     * @return array Returns an array of the message header values.
+     * @inheritDoc
      */
     public function getHeader(string $name): array
     {
@@ -111,10 +99,7 @@ abstract class AbstractMessage
     }
 
     /**
-     * 
-     * 
-     * @param string $name
-     * @return string
+     * @inheritDoc
      */
     public function getHeaderLine(string $name): string
     {
@@ -123,20 +108,18 @@ abstract class AbstractMessage
     }
 
     /**
-     * 
-     * @link https://regex101.com/r/VqHPJD/1 /^[a-z]+(?>-[a-z]+)*$/i
-     * @param string $name
-     * @param string[]|string $value
-     * @return self
+     * @inheritDoc
      */
-    public function withHeader(string $name, $value): self
+    public function withHeader(string $name, $value): MessageInterface
     {
-        /*
-        Regular expression for matching HTTP headers. For example: Content-Type, 
-        Accept or X-UA-Compatible.
-        */
+        /**
+         * Regular expression for matching HTTP headers. For example:
+         * Content-Type, Accept or X-UA-Compatible.
+         *
+         * @link https://regex101.com/r/VqHPJD/1
+         */
         if (preg_match('/^[a-z]+(?>-[a-z]+)*$/i', $name) === 0) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('Argument $name must be a valid HTTP header');
         }
 
         $clone = clone $this;
@@ -162,11 +145,9 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $name
-     * @param string[]|string $value
-     * @return self
+     * @inheritDoc
      */
-    public function withAddedHeader(string $name, $value): self
+    public function withAddedHeader(string $name, $value): MessageInterface
     {
         if (!$this->hasHeader($name)) {
             return $this->withHeader($name, $value);
@@ -180,10 +161,9 @@ abstract class AbstractMessage
     }
 
     /**
-     * @param string $name
-     * @return self
+     * @inheritDoc
      */
-    public function withoutHeader(string $name): self
+    public function withoutHeader(string $name): MessageInterface
     {
         if (!$this->hasHeader($name)) {
             return $this;
@@ -204,18 +184,17 @@ abstract class AbstractMessage
     }
 
     /**
-     * @return Stream
+     * @inheritDoc
      */
-    public function getBody(): Stream
+    public function getBody(): StreamInterface
     {
         return $this->body;
     }
 
     /**
-     * @param Stream $body
-     * @return self
+     * @inheritDoc
      */
-    public function withBody(Stream $body): self
+    public function withBody(Stream $body): MessageInterface
     {
         $clone = clone $this;
         $clone->body = $body;
