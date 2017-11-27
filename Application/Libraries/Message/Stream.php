@@ -3,11 +3,10 @@ namespace Application\Libraries\Message;
 
 use RuntimeException;
 use InvalidArgumentException;
+use Application\Libraries\Message\Interfaces\StreamInterface;
 
-/**
- * Represents a data stream.
- */
-class Stream
+
+class Stream implements StreamInterface
 {
     const CHUNK_SIZE = 4096;
 
@@ -78,10 +77,20 @@ class Stream
     }
 
     /**
-     * Closes the stream.
-     *
-     * @link http://php.net/manual/en/function.fclose.php
-     * @return void
+     * @inheritDoc
+     */
+    public function __toString()
+    {
+        try {
+            $this->rewind();
+            return $this->getContents();
+        } catch (RuntimeException $exception) {
+            return '';
+        }
+    }
+
+    /**
+     * @inheritDoc
      */
     public function close(): void
     {
@@ -95,9 +104,7 @@ class Stream
     }
 
     /**
-     * Detaches the stream and returns the resource handle.
-     *
-     * @return resource|null Returns the resource handle or null if there's none.
+     * @inheritDoc
      */
     public function detach()
     {
@@ -113,10 +120,7 @@ class Stream
     }
 
     /**
-     * Get the current size of the stream in bytes if available.
-     *
-     * @link http://php.net/manual/en/function.fstat.php
-     * @return int|null Returns the size or null if unknown.
+     * @inheritDoc
      */
     public function getSize(): ?int
     {
@@ -129,11 +133,7 @@ class Stream
     }
 
     /**
-     * Get the position of the cursor in the stream.
-     *
-     * @link http://php.net/manual/en/function.ftell.php
-     * @return int Position of the file pointer.
-     * @throws RuntimeException on failure.
+     * @inheritDoc
      */
     public function tell(): int
     {
@@ -147,10 +147,7 @@ class Stream
     }
 
     /**
-     * Return whether the cursor has reached the end of the stream.
-     *
-     * @link http://php.net/manual/en/function.feof.php
-     * @return bool
+     * @inheritDoc
      */
     public function eof(): bool
     {
@@ -158,9 +155,7 @@ class Stream
     }
 
     /**
-     * Return whether the stream is seekable.
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function isSeekable(): bool
     {
@@ -175,13 +170,7 @@ class Stream
     }
 
     /**
-     * Seek the cursor to another position in the stream.
-     *
-     * @link http://www.php.net/manual/en/function.fseek.php
-     * @param int $offset Offset in bytes to the desired position.
-     * @param int $whence Specifies where to offset should start.
-     * @return void
-     * @throws RuntimeException on failure.
+     * @inheritDoc
      */
     public function seek(int $offset, int $whence = SEEK_SET): void
     {
@@ -193,11 +182,7 @@ class Stream
     }
 
     /**
-     * Seek to the beginning of the stream and set the cursor position.
-     *
-     * @link http://php.net/manual/en/function.rewind.php
-     * @return void
-     * @throws RuntimeException on failure.
+     * @inheritDoc
      */
     public function rewind(): void
     {
@@ -207,9 +192,7 @@ class Stream
     }
 
     /**
-     * Returns whether the stream is writable.
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function isWritable(): bool
     {
@@ -229,13 +212,7 @@ class Stream
     }
 
     /**
-     * Write a sequence of data to the stream. The stream mode dictates how the
-     * data is written to the stream.
-     *
-     * @link http://php.net/manual/en/function.fwrite.php
-     * @param string The sequence of data that is to be written.
-     * @return int Returns the number of bytes written to the stream.
-     * @throws RuntimeException on failure.
+     * @inheritDoc
      */
     public function write(string $string): int
     {
@@ -249,9 +226,7 @@ class Stream
     }
 
     /**
-     * Returns whether the stream is readable.
-     *
-     * @return bool
+     * @inheritDoc
      */
     public function isReadable(): bool
     {
@@ -271,12 +246,7 @@ class Stream
     }
 
     /**
-     * Reads a specified amout of bytes from the current cursor position.
-     *
-     * @link http://php.net/manual/en/function.fread.php
-     * @param int $length Amount of bytes to read.
-     * @return string Returns the data which was read.
-     * @throws RuntimeException on failure.
+     * @inheritDoc
      */
     public function read(int $length): string
     {
@@ -290,11 +260,7 @@ class Stream
     }
 
     /**
-     * Reads and returns the remainder of data into a string.
-     *
-     * @link http://php.net/manual/en/function.stream-get-contents.php
-     * @return string Returns the remaining data.
-     * @throws RuntimeException on failure.
+     * @inheritDoc
      */
     public function getContents(): string
     {
@@ -308,12 +274,7 @@ class Stream
     }
 
     /**
-     * Reads and returns the remainder of data into a string.
-     *
-     * @link http://php.net/manual/en/function.stream-get-meta-data.php
-     * @return array|mixed|null Returns an array of metadata if no key is
-     *   provided, the key value if a key is provided or null if the key is not
-     *   found.
+     * @inheritDoc
      */
     public function getMetadata(?string $key = null)
     {
