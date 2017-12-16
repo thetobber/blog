@@ -3,27 +3,28 @@
 * @link http://php.net/manual/en/function.spl-autoload-register.php
 */
 
+$prefix = 'Application';
+
 $classMap = [
-    'Application\\Libraries\\Message\\Interfaces\\MessageInterface'         => '/Application/Libraries/Message/Interfaces/MessageInterfacephp',
-    'Application\\Libraries\\Message\\Interfaces\\RequestInterface'         => '/Application/Libraries/Message/Interfaces/RequestInterface.php',
-    'Application\\Libraries\\Message\\Interfaces\\ResponseInterface'        => '/Application/Libraries/Message/Interfaces/ResponseInterface.php',
-    'Application\\Libraries\\Message\\Interfaces\\ServerRequestInterface'   => '/Application/Libraries/Message/Interfaces/ServerRequestInterface.php',
-    'Application\\Libraries\\Message\\Interfaces\\StreamInterface'          => '/Application/Libraries/Message/Interfaces/StreamInterface.php',
-    'Application\\Libraries\\Message\\Interfaces\\UploadedFileInterface'    => '/Application/Libraries/Message/Interfaces/UploadedFileInterface.php',
-    'Application\\Libraries\\Message\\Interfaces\\UriInterface'             => '/Application/Libraries/Message/Interfaces/UriInterface.php',
-    'Application\\Libraries\\Message\\Stream'                               => '/Application/Libraries/Message/Stream.php',
-    'Application\\Libraries\\Message\\Uri'                                  => '/Application/Libraries/Message/Uri.php',
-    'Application\\Libraries\\Message\\AbstractMessage'                      => '/Application/Libraries/Message/AbstractMessage.php',
+    "$prefix\\Message\\MessageInterface"         => "$prefix/Message/Interfaces/MessageInterface.php",
+    "$prefix\\Message\\RequestInterface"         => "$prefix/Message/Interfaces/RequestInterface.php",
+    "$prefix\\Message\\ResponseInterface"        => "$prefix/Message/Interfaces/ResponseInterface.php",
+    "$prefix\\Message\\ServerRequestInterface"   => "$prefix/Message/Interfaces/ServerRequestInterface.php",
+    "$prefix\\Message\\StreamInterface"          => "$prefix/Message/Interfaces/StreamInterface.php",
+    "$prefix\\Message\\UploadedFileInterface"    => "$prefix/Message/Interfaces/UploadedFileInterface.php",
+    "$prefix\\Message\\UriInterface"             => "$prefix/Message/Interfaces/UriInterface.php",
+    "$prefix\\Message\\Stream"                   => "$prefix/Message/Stream.php",
+    "$prefix\\Message\\Uri"                      => "$prefix/Message/Uri.php",
+    "$prefix\\Message\\AbstractMessage"          => "$prefix/Message/AbstractMessage.php",
 
-    'Application\\Libraries\\Routing\\Route'                                => '/Application/Libraries/Routing/Route.php',
-    'Application\\Libraries\\Structure\\AbstractController'                 => '/Application/Libraries/Structure/AbstractController.php',
-    'Application\\Libraries\\Structure\\AbstractRepository'                 => '/Application/Libraries/Structure/AbstractRepository.php',
+    "$prefix\\Routing\\Route"                    => "$prefix/Routing/Route.php",
 
-    'Application\\Controllers\\Controller'                                  => '/Application/Controllers/Controller.php'
+    "$prefix\\Controller\\AbstractController"    => "$prefix/Controller/AbstractController.php",
+    "$prefix\\Controller\\TestController"        => "$prefix/Controller/TestController.php"
 ];
 
 spl_autoload_register(function ($className) use ($classMap) {
     if (isset($classMap[$className])) {
-        require(__DIR__.$classMap[$className]);
+        require(__DIR__.'/'.$classMap[$className]);
     }
 }, true, true);

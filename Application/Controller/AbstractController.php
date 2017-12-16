@@ -1,12 +1,12 @@
 <?php
-namespace Application\Libraries\Structure;
+namespace Application\Controller;
 
 abstract class AbstractController
 {
     protected function render(string $filePath, $model): string
     {
         ob_start();
-        include(VIEWS_DIR.'/'.$filePath);
+        include(VIEW_DIR.'/'.$filePath);
         return ob_get_clean();
         //$contents = ob_get_clean();
         //return gzencode($contents, 9);

@@ -1,9 +1,7 @@
 <?php
-namespace Application\Controllers;
+namespace Application\Controller;
 
-use Application\Libraries\Structure\AbstractController;
-
-class Controller extends AbstractController
+class TestController extends AbstractController
 {
     public function index(): string
     {

@@ -1,8 +1,8 @@
 <?php
-namespace Application\Libraries\Message\Interfaces;
+namespace Application\Message;
 
-use Application\Libraries\Message\Interfaces\MessageInterface;
-use Application\Libraries\Message\Interfaces\UriInterface;
+use Application\Message\MessageInterface;
+use Application\Message\UriInterface;
 
 /**
  * @link https://github.com/php-fig/http-message/blob/master/src/RequestInterface.php

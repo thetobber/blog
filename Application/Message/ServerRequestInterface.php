@@ -1,7 +1,7 @@
 <?php
-namespace Application\Libraries\Message\Interfaces;
+namespace Application\Message;
 
-use Application\Libraries\Message\Interfaces\RequestInterface;
+use Application\Message\RequestInterface;
 
 /**
  * @link https://github.com/php-fig/http-message/blob/master/src/ServerRequestInterface.php

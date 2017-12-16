@@ -1,9 +1,9 @@
 <?php
-namespace Application\Libraries\Message;
+namespace Application\Message;
 
 use InvalidArgumentException;
-use Application\Libraries\Message\Interfaces\MessageInterface;
-use Application\Libraries\Message\Interfaces\StreamInterface;
+use Application\Message\MessageInterface;
+use Application\Message\StreamInterface;
 
 abstract class AbstractMessage implements MessageInterface
 {

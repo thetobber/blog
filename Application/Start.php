@@ -1,10 +1,8 @@
 <?php
 declare(strict_types = 1);
-define('VIEWS_DIR', __DIR__.'/Views');
+define('VIEW_DIR', __DIR__.'/View');
 
-use Application\Libraries\Message\Stream;
-use Application\Libraries\Routing\Route;
-use Application\Controllers\Controller;
+use Application\Controller\TestController;
 
 function respond(Stream $stream)
 {
@@ -29,10 +27,16 @@ function respond(Stream $stream)
     }
 }
 
-$controller = new Controller();
-$route = new Route([$controller, 'index']);
 
-$stream = new Stream(fopen('php://temp', 'r+'));
-$stream->write($route->callAction());
+$testController = new TestController();
 
-respond($stream);
+echo $testController->index();
+
+
+// $controller = new Controller();
+// $route = new Route([$controller, 'index']);
+
+// $stream = new Stream(fopen('php://temp', 'r+'));
+// $stream->write($route->callAction());
+
+// respond($stream);
