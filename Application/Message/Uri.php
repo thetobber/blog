@@ -8,19 +8,53 @@ use InvalidArgumentException;
  */
 class Uri
 {
+    /**
+     * @var array
+     */
     const SCHEMES = [
         '' => true,
         'http' => true,
         'https' => true
     ];
 
+    /**
+     * @var string
+     */
     protected $scheme;
+
+    /**
+     * @var string
+     */
     protected $host;
+
+    /**
+     * @var int|null
+     */
     protected $port;
+
+    /**
+     * @var string
+     */
     protected $user;
+
+    /**
+     * @var string
+     */
     protected $password;
+
+    /**
+     * @var string
+     */
     protected $path;
+
+    /**
+     * @var string
+     */
     protected $query;
+
+    /**
+     * @var string
+     */
     protected $fragment;
 
     public function __construct(
@@ -33,7 +67,7 @@ class Uri
         string $query = '',
         string $fragment = ''
     ) {
-    
+
         $this->scheme = str_replace('://', '', strtolower($scheme));
         $this->host = $host;
         $this->port = $port;
