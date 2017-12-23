@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Application\Libraries\Routing;
 
 class Route
@@ -12,6 +13,6 @@ class Route
 
     public function callAction()
     {
-        return call_user_func($this->action);
+        return \call_user_func($this->action);
     }
 }

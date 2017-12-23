@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 define('VIEW_DIR', __DIR__.'/View');
 
-use Application\Controller\TestController;
-
 function respond(Stream $stream)
 {
     $size = $stream->getSize();
@@ -27,16 +25,4 @@ function respond(Stream $stream)
     }
 }
 
-
-$testController = new TestController();
-
-echo $testController->index();
-
-
-// $controller = new Controller();
-// $route = new Route([$controller, 'index']);
-
-// $stream = new Stream(fopen('php://temp', 'r+'));
-// $stream->write($route->callAction());
-
-// respond($stream);
+require 'Test.php';

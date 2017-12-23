@@ -1,0 +1,28 @@
+{
+    "name": "Application",
+    "authors": [
+        {
+            "name": "Tobias",
+            "email": "tobi3538@stud.kea.dk"
+        }
+    ],
+    "description": "Web Security exam project",
+    "autoload": {
+        "exclude-from-classmap": [
+            "Test"
+        ],
+        "psr-4": {
+            "Application\\": "Application/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Application\\": "Application/",
+            "Test\\": "Test/"
+        }
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    }
+}

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Application\Message;
 
 class Request extends AbstractMessage implements RequestInterface

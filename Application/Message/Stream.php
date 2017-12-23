@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Application\Message;
 
 use RuntimeException;
@@ -206,7 +207,7 @@ class Stream implements StreamInterface
         ) {
             throw new RuntimeException();
         }
-        
+
         return $contents;
     }
 
