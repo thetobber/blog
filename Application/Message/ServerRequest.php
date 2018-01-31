@@ -77,7 +77,7 @@ class ServerRequest extends Request implements ServerRequestInterface
         return $clone;
     }
 
-    public function getQueryParams():array
+    public function getQueryParams(): array
     {
         return $this->queryParams;
     }
@@ -135,7 +135,7 @@ class ServerRequest extends Request implements ServerRequestInterface
         }
 
         if ($mediaType == 'application/x-www-form-urlencoded') {
-            $parsed = array();
+            $parsed = [];
             parse_str($contents, $parsed);
             return $parsed;
         }

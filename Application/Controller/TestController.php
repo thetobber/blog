@@ -2,13 +2,17 @@
 declare(strict_types = 1);
 namespace Application\Controller;
 
+use Application\Message\ResponseInterface;
+
 class TestController extends AbstractController
 {
-    public function index(): string
+    public function index(): ResponseInterface
     {
-        return $this->render('Index.php', [
+        $model = [
             'test1' => 'Variable for testing.',
             'test2' => 'Hello world'
-        ]);
+        ];
+
+        return $this->view('../View/Index.php', $model, 200);
     }
 }

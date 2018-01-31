@@ -7,7 +7,28 @@ use Application\Message\UploadedFile;
 use Application\Message\Uri;
 
 
-$uri = Uri::fromString('https://user:pass@tobymw.dk:443/path/to/resource/?var=hello&arr[]=n1&arr[]=n2&arr[][]=hello#fragment');
+// $uri = Uri::fromString('https://user:pass@tobymw.dk:443/path/to/resource/?var=hello&arr[]=n1&arr[]=n2&arr[][]=hello#fragment');
+
+$uri = new Uri(
+    'https',
+    'tobymw.dk',
+    443,
+    'user',
+    'pass',
+    'path/to/resource',
+    'var=hello&arr[]=n1&arr[]=n2&arr[][]=hello',
+    'fragment'
+);
+// $uri = new Uri(
+//     'https',
+//     'tobymw.dk',
+//     443,
+//     'user',
+//     'pass',
+//     'path/to/resource',
+//     'var=hello&arr[]=n1&arr[]=n2&arr[][]=hello',
+//     'fragment'
+// );
 
 var_dump(
     $uri,
@@ -22,13 +43,4 @@ var_dump(
     $uri->getFragment()
 );
 
-
-// $uri2 = new Uri(
-//     'https',
-//     'tobymw.dk',
-//     443, 'user',
-//     'pass',
-//     'path/to/resource',
-//     'var=hello&arr[]=n1&arr[]=n2&arr[][]=hello',
-//     'fragment'
-// );
+echo $uri;

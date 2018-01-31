@@ -74,7 +74,7 @@ class Uri
         $this->port = $this->filterPort($port);
         $this->user = $user;
         $this->password = $password;
-        $this->path = empty($path) ? '/' : $this->filterPath($path);
+        $this->path = $this->filterPath($path);
         $this->query = $this->filterQuery($query);
         $this->fragment = $this->filterQuery($fragment);
     }
@@ -82,14 +82,15 @@ class Uri
     public function __toString(): string
     {
         $scheme = $this->getScheme();
+        $authority = $this->getAuthority();
         $query = $this->getQuery();
         $fragment = $this->getFragment();
 
-        return (empty($scheme) ? '' :  $scheme.'://').
-            $this->getAuthority().
-            $this->getPath().
-            (empty($query) ? '' : '?'.$query).
-            (empty($fragment) ? '' : '#'.$fragment);
+        return ($scheme ? "$scheme:" : '').
+            ($authority ? "//$authority" : '').
+            rtrim($this->getPath(), '/').
+            ($query ? "?$query" : '').
+            ($fragment ? "#$fragment" : '');
     }
 
     public static function fromString(string $uri): self
@@ -218,7 +219,7 @@ class Uri
             $path
         );
 
-        return rtrim($path, '/');
+        return '/'.ltrim(rtrim($path, '/'), '/');
     }
 
     public function getQuery(): string
