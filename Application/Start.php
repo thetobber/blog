@@ -11,16 +11,19 @@ use Application\Routing\Route;
 use Application\Middleware\Dispatcher;
 use Application\Middleware\RouteMiddleware;
 use Application\Controller\TestController;
+use Application\Controller\AuthController;
 use Application\ResponseDispatcher;
 
 $request = ServerRequestFactory::getServerRequest();
 $response = new Response();
 
 $testCtrl = new TestController($request, $response);
+$authCtrl = new AuthController($request, $response);
 
 $dispatcher = new Dispatcher([
     new RouteMiddleware([
-        new Route('@^(/|/index)$@', 'get', [$testCtrl, 'index']),
+        new Route('@^/register$@i', 'get', [$authCtrl, 'getRegister']),
+        new Route('@^/register$@i', 'post', [$authCtrl, 'postRegister']),
         new Route('@^.*?$@', 'all', [$testCtrl, 'notFound'])
     ])
 ]);

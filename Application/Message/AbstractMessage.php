@@ -66,7 +66,13 @@ abstract class AbstractMessage implements MessageInterface
 
     public function getHeader(string $name): array
     {
-        return $this->headers[strtolower($name)] ?? [];
+        $headerValue = $this->headers[strtolower($name)] ?? [];
+
+        if (is_array($headerValue))  {
+            return $headerValue;
+        }
+
+        return [$headerValue];
     }
 
     public function getHeaderLine(string $name): string

@@ -34,7 +34,7 @@ class Request extends AbstractMessage implements RequestInterface
         $this->method = $method;
         $this->protocolVersion = $protocolVersion;
         $this->uri = $uri;
-        $this->headers = $headers;
+        $this->headers = array_change_key_case($headers, CASE_LOWER);
         $this->body = $body;
     }
 

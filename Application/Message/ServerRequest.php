@@ -128,7 +128,7 @@ class ServerRequest extends Request implements ServerRequestInterface
     protected function parseBody()
     {
         $contents = (string) $this->body;
-        $mediaType = $this->getHeader('content-type');
+        $mediaType = $this->getHeaderLine('content-type');
 
         if (empty($mediaType)) {
             return $contents;

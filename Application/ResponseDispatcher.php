@@ -18,7 +18,6 @@ class ResponseDispatcher
         );
 
         header($header, true, $statusCode);
-        // header($headers, true, $statusCode);
     }
 
     protected static function setHeaders(Response $response): void
