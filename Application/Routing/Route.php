@@ -9,17 +9,24 @@ use Application\Message\UriInterface;
 class Route implements RouteInterface
 {
     protected $pattern;
+    protected $method;
     protected $action;
 
-    public function __construct(string $pattern, callable $action)
+    public function __construct(string $pattern, string $method, callable $action)
     {
         $this->pattern = $pattern;
+        $this->method = $method;
         $this->action = $action;
     }
 
     public function callAction(): Response
     {
         return call_user_func($this->action);
+    }
+
+    public function getMethod(): string
+    {
+        return $this->method;
     }
 
     public function match(UriInterface $uri): bool {

@@ -98,7 +98,7 @@ class Response extends AbstractMessage implements ResponseInterface
 
     public function getStatusCode(): int
     {
-        $this->statusCode;
+        return $this->statusCode;
     }
 
     public function withStatus(int $code, string $reasonPhrase = ''): self

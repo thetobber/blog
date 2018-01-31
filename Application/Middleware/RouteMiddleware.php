@@ -21,17 +21,22 @@ class RouteMiddleware implements MiddlewareInterface
     public function __invoke(Request $request, Response $response, callable $next = null): Response
     {
         $uri = $request->getUri();
-        $route = $this->matchRoute($uri);
+        $route = $this->matchRoute($request);
 
         $response = $route->callAction();
 
         return $next($request, $response);
     }
 
-    private function matchRoute(UriInterface $uri): RouteInterface
+    private function matchRoute(Request $request): RouteInterface
     {
+        $uri = $request->getUri();
+        $requestMethod = strtolower($request->getMethod());
+
         foreach ($this->routes as $route) {
-            if ($route->match($uri)) {
+            $method = strtolower($route->getMethod());
+
+            if ($route->match($uri) && ($method === 'all' || $requestMethod === $method)) {
                 return $route;
             }
         }
