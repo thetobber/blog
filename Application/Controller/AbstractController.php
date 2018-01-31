@@ -10,6 +10,7 @@ abstract class AbstractController
     protected $request;
     protected $response;
     protected $attributes;
+    protected $viewDir = __DIR__.'/../View/';
 
     public function __construct(
         ServerRequestInterface $request,
@@ -22,16 +23,16 @@ abstract class AbstractController
 
     protected function renderView(string $filePath, $model): string {
         ob_start();
-        include($filePath);
+        include($this->viewDir.$filePath);
         return ob_get_clean();
     }
 
     protected function view(
         string $filePath,
-        $model,
+        $model = null,
         int $statusCode = 200
     ): ResponseInterface {
-        $contents = $this->render($filePath, $model);
+        $contents = $this->renderView($filePath, $model);
 
         return $this->writeResponse('text/html', $contents, $statusCode);
     }
@@ -45,15 +46,8 @@ abstract class AbstractController
             ->withHeader('Content-Type', $mimeType)
             ->withStatus($statusCode);
 
-        return $this->reponse->getBody()->write($contents);
-    }
+        $this->response->getBody()->write($contents);
 
-    protected function render(string $filePath, $model): string
-    {
-        ob_start();
-        include(VIEW_DIR.'/'.$filePath);
-        return ob_get_clean();
-        //$contents = ob_get_clean();
-        //return gzencode($contents, 9);
+        return $this->response;
     }
 }

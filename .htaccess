@@ -1,2 +1,6 @@
 Header always set X-Content-Type-Options "nosniff"
 Header unset X-Powered-By
+
+RewriteEngine On
+# RewriteCond %{REQUEST_URI} !/Static
+RewriteRule ^ index.php [QSA,L]

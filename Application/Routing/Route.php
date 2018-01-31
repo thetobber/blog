@@ -2,7 +2,8 @@
 declare(strict_types = 1);
 namespace Application\Routing;
 
-use Application\Message\ResponseInterface;
+use Application\Message\ServerRequestInterface as Request;
+use Application\Message\ResponseInterface as Response;
 use Application\Message\UriInterface;
 
 class Route implements RouteInterface
@@ -16,7 +17,7 @@ class Route implements RouteInterface
         $this->action = $action;
     }
 
-    public function callAction(): ResponseInterface
+    public function callAction(): Response
     {
         return call_user_func($this->action);
     }

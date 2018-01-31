@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * Represents an Uri <scheme>://<authority>[/<path>][?<query string>]
  */
-class Uri
+class Uri implements UriInterface
 {
     /**
      * @var array

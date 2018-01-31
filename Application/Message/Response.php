@@ -91,7 +91,7 @@ class Response extends AbstractMessage implements ResponseInterface
         $this->headerLines = [];
     }
 
-    public function __clone(): void
+    public function __clone()
     {
         $this->body = clone $this->body;
     }

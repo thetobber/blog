@@ -2,8 +2,8 @@
 declare(strict_types = 1);
 namespace Application\Middleware;
 
-use Application\Message\ServerRequestInterface as Request;
-use Application\Message\ResponseInterface as Response;
+use Application\Message\ServerRequestInterface;
+use Application\Message\ResponseInterface;
 
 class Dispatcher
 {
@@ -14,8 +14,10 @@ class Dispatcher
         $this->queue = $queue;
     }
 
-    public function __invoke(Request $request, Response $response): Response
-    {
+    public function __invoke(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ): ResponseInterface {
         $current = array_shift($this->queue);
         $callable = $this->resolve($current);
 

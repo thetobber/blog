@@ -165,7 +165,7 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     public function getAttributes(): array
     {
-        return $this->$attributes;
+        return $this->attributes;
     }
 
     /**

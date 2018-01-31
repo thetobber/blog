@@ -7,5 +7,5 @@ use Application\Message\ResponseInterface as Response;
 
 interface MiddlewareInterface
 {
-    public function __invoke(Request $request, Response $response): Response;
+    public function __invoke(Request $request, Response $response, callable $next = null): Response;
 }

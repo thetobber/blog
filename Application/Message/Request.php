@@ -32,9 +32,13 @@ class Request extends AbstractMessage implements RequestInterface
         StreamInterface $body
     ) {
         $this->method = $method;
+        $this->protocolVersion = $protocolVersion;
+        $this->uri = $uri;
+        $this->headers = $headers;
+        $this->body = $body;
     }
 
-    public function __clone(): void
+    public function __clone()
     {
         $this->uri = clone $this->uri;
         $this->body = clone $this->body;

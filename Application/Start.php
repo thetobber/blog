@@ -1,6 +1,19 @@
 <?php
 declare(strict_types = 1);
-define('VIEW_DIR', __DIR__.'/View');
+// define('VIEW_DIR', __DIR__.'/View');
+
+use Application\Message\ServerRequestFactory;
+use Application\Message\Stream;
+use Application\Message\Response;
+
+use Application\Message\ServerRequestInterface;
+use Application\Message\ResponseInterface;
+
+use Application\Middleware\Dispatcher;
+use Application\Middleware\RouteMiddleware;
+use Application\Controller\TestController;
+
+use Application\Routing\Route;
 
 function respond(Stream $stream)
 {
@@ -25,4 +38,18 @@ function respond(Stream $stream)
     }
 }
 
-require 'Test.php';
+$request = ServerRequestFactory::getServerRequest();
+$response = new Response();
+
+$testController = new TestController($request, $response);
+
+$routeMiddleware = new RouteMiddleware([
+    new Route('@^(/|/index)$@', [$testController, 'index']),
+    new Route('@^.*?$@', [$testController, 'notFound'])
+]);
+
+$dispatcher = new Dispatcher([$routeMiddleware]);
+
+$contents = (string) $dispatcher($request, $response)->getBody();
+
+respond($response->getBody());
