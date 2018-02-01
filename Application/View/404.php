@@ -8,5 +8,10 @@
 </head>
 <body>
     <h1>404</h1>
+    <?php echo ROOT_DIR ?>
+    <br>
+    <?php echo VIEW_DIR ?>
+    <br>
+    <?php echo STATIC_DIR ?>
 </body>
 </html>
