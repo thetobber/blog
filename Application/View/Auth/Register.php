@@ -1,43 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php include VIEW_DIR.'/Shared/Header.php' ?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-
-<body>
-
-<form method="post" action="/register" autocomplete="off">
-    <div>
-        <label for="input-1">Username</label>
-        <input id="input-1" name="username" type="text">
+<?php if (isset($model['errors']['database'])): ?>
+    <div class="alert alert-danger">
+        <?= $model['errors']['database'] ?>
     </div>
+<?php endif ?>
 
-    <div>
-        <label for="input-2">E-mail</label>
-        <input id="input-2" name="email" type="email">
+<div class="card">
+    <div class="card-body">
+        <form method="post" action="/register" autocomplete="off">
+            <div class="form-group">
+                <label for="input-1">Username</label>
+                <input id="input-1" class="form-control <?php _err($model, 'username') ?>" name="username" type="text" placeholder="Username" <?php _val($model, 'username') ?>>
+                <div class="invalid-feedback">Must be between 1 and 191 characters.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-2">E-mail</label>
+                <input id="input-2" class="form-control <?php _err($model, 'email') ?>" name="email" type="email" placeholder="E-mail" <?php _val($model, 'email') ?>>
+                <div class="invalid-feedback">Must be a valid e-mail address.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-4">Password</label>
+                <input id="input-4" class="form-control <?php _err($model, 'password') ?>" name="password" type="password" placeholder="Password" <?php _val($model, 'password') ?>>
+                <div class="invalid-feedback">Must be minimum 8 characters long and contain 1 upper and lowercase letter.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="input-5">Confirm password</label>
+                <input id="input-5" class="form-control <?php _err($model, 'confirm') ?>" name="confirm" type="password" placeholder="Confirm password">
+                <div class="invalid-feedback">Must be equal to password.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
     </div>
+</div>
 
-    <div>
-        <label for="input-4">Password</label>
-        <input id="input-4" name="password" type="password">
-    </div>
-
-    <div>
-        <label for="input-5">Confirm password</label>
-        <input id="input-5" name="confirm" type="password">
-    </div>
-
-    <button type="submit">Submit</button>
-</form>
-
-<?php
-var_dump($model)
-?>
-
-</body>
-
-</html>
+<?php include VIEW_DIR.'/Shared/Footer.php' ?>

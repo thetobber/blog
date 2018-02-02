@@ -7,7 +7,6 @@ use Application\Message\ServerRequestInterface as Request;
 use Application\Message\ResponseInterface as Response;
 use Application\Message\UriInterface;
 use Application\Routing\Route;
-use Application\Routing\RouteInterface;
 
 class RouteMiddleware implements MiddlewareInterface
 {
@@ -23,12 +22,12 @@ class RouteMiddleware implements MiddlewareInterface
         $uri = $request->getUri();
         $route = $this->matchRoute($request);
 
-        $response = $route->callAction();
+        $request = $request->withAttribute('params', $route->getParameters());
 
-        return $next($request, $response);
+        return $next($request, $route($request, $response));
     }
 
-    private function matchRoute(Request $request): RouteInterface
+    private function matchRoute(Request $request): Route
     {
         $uri = $request->getUri();
         $requestMethod = strtolower($request->getMethod());

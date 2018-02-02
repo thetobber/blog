@@ -9,7 +9,8 @@
   "description": "Web Security exam project",
   "autoload": {
     "files": [
-      "Application/Configuration/Release.php"
+      "Application/Configuration/Release.php",
+      "Application/Security/Helpers.php"
     ],
     "psr-4": {
       "Application\\": "Application/"

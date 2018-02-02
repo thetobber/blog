@@ -1,7 +1,4 @@
 <?php
-
-ini_set('display_errors', 1);
-
 require(__DIR__.'/Vendor/autoload.php');
 require(__DIR__.'/Application/Start.php');
 

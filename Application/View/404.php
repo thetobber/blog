@@ -1,17 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>404</h1>
-    <?php echo ROOT_DIR ?>
-    <br>
-    <?php echo VIEW_DIR ?>
-    <br>
-    <?php echo STATIC_DIR ?>
-</body>
-</html>
+<?php include VIEW_DIR.'/Shared/Header.php' ?>
+<h1>404</h1>
+<?= $model['error'] ?? 'Not found.' ?>
+<?php include VIEW_DIR.'/Shared/Footer.php' ?>

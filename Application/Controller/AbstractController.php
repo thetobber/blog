@@ -7,43 +7,41 @@ use Application\Message\ResponseInterface as Response;
 
 abstract class AbstractController
 {
-    protected $request;
-    protected $response;
-    protected $attributes;
-    protected $viewDir = __DIR__.'/../View/';
-
-    public function __construct(Request $request, Response $response)
+    protected function view(string $filePath, Response $response, $model = null): Response
     {
-        $this->request = $request;
-        $this->response = $response;
-        $this->attributes = $request->getAttributes();
+        $contents = $this
+            ->render($filePath, $model);
+
+        $response
+            ->getBody()
+            ->write($contents);
+
+        $size = $response
+            ->getBody()
+            ->getSize();
+
+        $response = $response
+            ->withHeader('Content-Type', 'text/html;charset=UTF-8')
+            ->withHeader('Content-Length', (string) $size)
+            ->withStatus(200);
+
+        return $response;
     }
 
-    protected function renderView(string $filePath, $model): string
+    protected function redirect(string $location, Response $response)
+    {
+        $response = $response
+            ->withHeader('Location', $location)
+            ->withStatus(302);
+
+        return $response;
+    }
+
+    protected function render(string $filePath, $model): string
     {
         ob_start();
-        include($this->viewDir.$filePath);
+        include VIEW_DIR.$filePath;
 
         return ob_get_clean();
-    }
-
-    protected function view(string $filePath, $model = null, int $statusCode = 200): Response
-    {
-        $contents = $this->renderView($filePath, $model);
-
-        return $this->writeResponse('text/html;charset=UTF-8', $contents, $statusCode);
-    }
-
-    protected function writeResponse(string $mimeType, string $contents, int $statusCode = 200): Response
-    {
-        $this->response->getBody()->write($contents);
-        $size = (string) $this->response->getBody()->getSize();
-
-        $this->response = $this->response
-            ->withHeader('Content-Type', $mimeType)
-            ->withHeader('Content-Length', $size)
-            ->withStatus($statusCode);
-
-        return $this->response;
     }
 }

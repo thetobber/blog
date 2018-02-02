@@ -27,8 +27,7 @@ CREATE TABLE `user` (
   `email`     VARCHAR(191) NOT NULL,
   `password`  BINARY(60) NOT NULL,
   `created`   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `verified`  BOOLEAN NOT NULL DEFAULT false,
-  `disabled`  BOOLEAN NOT NULL DEFAULT false,
+  `verified`  BOOLEAN NOT NULL DEFAULT false
 
   PRIMARY KEY (`id`),
   UNIQUE INDEX (`username`) USING HASH
@@ -39,12 +38,13 @@ ENGINE = InnoDB;
 DELIMITER //
 
 -- Create user procedure
-CREATE DEFINER = 'spot'@'localhost' PROCEDURE createUser
+-- DEFINER = 'spot'@'localhost'
+CREATE PROCEDURE CREATE_USER
 (
   IN inRole     TINYINT UNSIGNED,
   IN inUsername VARCHAR(191),
   IN inEmail    VARCHAR(191),
-  IN inPassword VARCHAR(4096)
+  IN inPassword BINARY(60)
 )
 BEGIN
   INSERT INTO `user` (`role`, `username`, `email`, `password`)
@@ -52,7 +52,7 @@ BEGIN
 END//
 
 -- Get an user by username
-CREATE DEFINER = 'spot'@'localhost' PROCEDURE getUser
+CREATE PROCEDURE GET_USER
 (
   IN inUsername VARCHAR(191)
 )
@@ -62,20 +62,31 @@ BEGIN
 END//
 
 -- Update user procedure
-CREATE DEFINER = 'spot'@'localhost' PROCEDURE updateUser
+CREATE PROCEDURE UPDATE_USER
 (
   IN inUsername VARCHAR(191),
-  IN inEmail VARCHAR(191),
+  IN inEmail    VARCHAR(191)
+)
+BEGIN
+  UPDATE `user`
+  SET `email` = inEmail
+  WHERE `username` = inUsername;
+END//
+
+-- Update user procedure
+CREATE PROCEDURE UPDATE_USER_PASSWORD
+(
+  IN inUsername VARCHAR(191),
   IN inPassword BINARY(60)
 )
 BEGIN
   UPDATE `user`
-  SET `email` = inEmail, `password` = inPassword
+  SET `password` = inPassword
   WHERE `username` = inUsername;
 END//
 
 -- Delete user procedure
-CREATE DEFINER = 'spot'@'localhost' PROCEDURE deleteUser
+CREATE PROCEDURE DELETE_USER
 (
   IN inUsername VARCHAR(191)
 )
