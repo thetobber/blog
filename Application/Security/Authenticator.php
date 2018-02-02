@@ -20,6 +20,7 @@ class Authenticator
     public static function signOut(): void
     {
         session_destroy();
+        session_start();
         session_regenerate_id();
     }
 

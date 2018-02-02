@@ -1,14 +1,22 @@
-<?php include VIEW_DIR.'/Shared/Header.php' ?>
+<?php
+use Application\Security\CsrfValidator;
+include VIEW_DIR.'/Shared/Header.php'
+?>
 
 <?php if (isset($model['errors']['database'])): ?>
     <div class="alert alert-danger">
         <?= $model['errors']['database'] ?>
     </div>
 <?php endif ?>
+<?php if (isset($model['errors']['token'])): ?>
+    <div class="alert alert-warning">Invalid token was passed. Please re-open the page.</div>
+<?php endif ?>
 
 <div class="card">
     <div class="card-body">
         <form method="post" action="/register" autocomplete="off">
+            <input name="token" type="hidden" value="<?= CsrfValidator::getToken() ?>">
+
             <div class="form-group">
                 <label for="input-1">Username</label>
                 <input id="input-1" class="form-control <?php _err($model, 'username') ?>" name="username" type="text" placeholder="Username" <?php _val($model, 'username') ?>>

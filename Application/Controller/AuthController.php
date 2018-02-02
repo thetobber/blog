@@ -82,4 +82,44 @@ class AuthController extends AbstractController
 
         return $this->view('/Auth/Profile.php', $response, $model);
     }
+
+    public function postUpdatePassword(Request $request, Response $response): Response
+    {
+        if (!Authenticator::isAuthenticated()) {
+            return $this->redirect('/signin', $response);
+        }
+
+        $body = $request->getParsedBody();
+        $body['username'] = $_SESSION['user']['username'];
+
+        $model = $this->repository->updateUserPassword($body);
+
+        if (isset($model['errors'])) {
+            return $this->view('/Auth/Profile.php', $response, $model);
+        }
+
+        $model['password_success'] = true;
+
+        return $this->view('/Auth/Profile.php', $response, $model);
+    }
+
+    public function postUpdateEmail(Request $request, Response $response): Response
+    {
+        if (!Authenticator::isAuthenticated()) {
+            return $this->redirect('/signin', $response);
+        }
+
+        $body = $request->getParsedBody();
+        $body['username'] = $_SESSION['user']['username'];
+
+        $model = $this->repository->updateUserEmail($body);
+
+        if (isset($model['errors'])) {
+            return $this->view('/Auth/Profile.php', $response, $model);
+        }
+
+        $model['email_success'] = true;
+
+        return $this->view('/Auth/Profile.php', $response, $model);
+    }
 }

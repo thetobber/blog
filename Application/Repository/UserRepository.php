@@ -60,9 +60,9 @@ class UserRepository extends AbstractRepository
                 if ($model !== false) {
                     $result['content'] = $model;
                 }
-                else {
-                    $result['errors']['not_found'] = true;
-                }
+                // else {
+                //     $result['errors']['not_found'] = true;
+                // }
             }
             else {
                 $result['errors']['database'] = 'An unexpected error occurred.';
@@ -77,10 +77,73 @@ class UserRepository extends AbstractRepository
         return $result;
     }
 
-
-    public function updateUser(): array
+    public function updateUserPassword(array $model): array
     {
+        $errors = Validator::verifyUpdatePassword($model);
 
+        if (!empty($errors)) {
+            return ['errors' => $errors];
+        }
+
+        $model = array_merge($model, $this->getUser($model['username']));
+
+        if (!isset($model['content'])) {
+            $model['errors']['credentials'] = true;
+            return $model;
+        }
+
+        $isValid = password_verify($model['old_password'], $model['content']['password']);
+
+        if (!$isValid) {
+            $model['errors']['credentials'] = true;
+            return $model;
+        }
+
+        $statement = $this->database->prepare('CALL UPDATE_USER_PASSWORD(?, ?)');
+        $password = password_hash($model['password'], PASSWORD_BCRYPT);
+        $statement->bindValue(1, $model['username'], PDO::PARAM_STR);
+        $statement->bindValue(2, $password);
+
+        try {
+            if (!$statement->execute()) {
+                $model['errors']['database'] = 'An unexpected error occurred.';
+            }
+        }
+        catch (PDOException $exception) {
+            $model['errors']['database'] = 'An unexpected error occurred.';
+        }
+
+        $statement->closeCursor();
+
+        return $model;
+    }
+
+    public function updateUserEmail(array $model): array
+    {
+        $errors = Validator::verifyUpdateEmail($model);
+
+        if (!empty($errors)) {
+            return ['errors' => $errors];
+        }
+
+        $statement = $this->database->prepare('CALL UPDATE_USER_EMAIL(?, ?)');
+        $statement->bindValue(1, $model['username'], PDO::PARAM_STR);
+        $statement->bindValue(2, $model['email'], PDO::PARAM_STR);
+
+        try {
+            if (!$statement->execute()) {
+                $model['errors']['database'] = 'An unexpected error occurred.';
+            }
+        }
+        catch (PDOException $exception) {
+            $model['errors']['database'] = 'An unexpected error occurred.';
+        }
+
+        $statement->closeCursor();
+
+        $_SESSION['user']['email'] = $model['email'];
+
+        return $model;
     }
 
     public function deleteUser(): array

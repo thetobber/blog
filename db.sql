@@ -27,15 +27,88 @@ CREATE TABLE `user` (
   `email`     VARCHAR(191) NOT NULL,
   `password`  BINARY(60) NOT NULL,
   `created`   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `verified`  BOOLEAN NOT NULL DEFAULT false
+  `verified`  BOOLEAN NOT NULL DEFAULT false,
 
   PRIMARY KEY (`id`),
   UNIQUE INDEX (`username`) USING HASH
 )
 ENGINE = InnoDB;
 
+-- Post table
+CREATE TABLE `post` (
+    `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `title`       VARCHAR(191) NOT NULL,
+    `author`      VARCHAR(191) NOT NULL,
+    `owner`       VARCHAR(191) NOT NULL,
+    `content`     TEXT DEFAULT NULL,
+    `created`     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`author`) REFERENCES `user` (`username`),
+    FOREIGN KEY (`owner`) REFERENCES `user` (`username`),
+    INDEX (`created`) USING BTREE
+);
+
 -- Set delimiter to // so commands in procedures are not stopped
 DELIMITER //
+
+-- Create post procedure
+CREATE PROCEDURE CREATE_POST
+(
+  IN inTitle   TINYINT UNSIGNED,
+  IN inAuthor  VARCHAR(191),
+  IN inOwner   VARCHAR(191),
+  IN inContent TEXT
+)
+BEGIN
+  INSERT INTO `post` (`title`, `author`, `owner`, `content`)
+  VALUES (inTitle, inAuthor, inOwner, inContent);
+END//
+
+-- Get post by author procedure
+CREATE PROCEDURE GET_POSTS_BY_AUTHOR
+(
+  IN inAuthor VARCHAR(191)
+)
+BEGIN
+  SELECT * FROM `post`
+  WHERE `author` = inAuthor;
+END//
+
+-- Get post by owner procedure
+CREATE PROCEDURE GET_POSTS_BY_OWNER
+(
+  IN inOwner VARCHAR(191)
+)
+BEGIN
+  SELECT * FROM `post`
+  WHERE `owner` = inOwner;
+END//
+
+-- Update post procedure
+CREATE PROCEDURE UPDATE_POST
+(
+  in inId      BIGINT UNSIGNED,
+  IN inAuthor  VARCHAR(191),
+  IN inTitle   TINYINT UNSIGNED,
+  IN inContent TEXT
+)
+BEGIN
+  UPDATE `post`
+  SET `title` = inTitle, `content` = inContent
+  WHERE `id` = inId AND `author` = inAuthor;
+END//
+
+-- Delete post procedure
+CREATE PROCEDURE DELETE_POST
+(
+  in inId      BIGINT UNSIGNED,
+  IN inAuthor  VARCHAR(191)
+)
+BEGIN
+  DELETE FROM `post`
+  WHERE `id` = inId AND `author` = inAuthor;
+END//
 
 -- Create user procedure
 -- DEFINER = 'spot'@'localhost'
@@ -62,7 +135,7 @@ BEGIN
 END//
 
 -- Update user procedure
-CREATE PROCEDURE UPDATE_USER
+CREATE PROCEDURE UPDATE_USER_EMAIL
 (
   IN inUsername VARCHAR(191),
   IN inEmail    VARCHAR(191)

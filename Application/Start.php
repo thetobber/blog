@@ -27,9 +27,11 @@ $dispatcher = new Dispatcher([
 
         new Route('@^/signin$@i', 'get', [$authCtrl, 'getSignIn']),
         new Route('@^/signin$@i', 'post', [$authCtrl, 'postSignIn']),
-
         new Route('@^/signout$@i', 'post', [$authCtrl, 'postSignOut']),
-        new Route('@^/profile$@i', 'get', [$authCtrl, 'getProfile']),
+
+        new Route('@^/update-password$@i', 'post', [$authCtrl, 'postUpdatePassword']),
+        new Route('@^/update-email$@i', 'post', [$authCtrl, 'postUpdateEmail']),
+        new Route('@^/(profile|update-password|update-email)$@i', 'get', [$authCtrl, 'getProfile']),
 
         // new Route('@^/user/(?<username>.{0,191})$@iu', 'get', [$authCtrl, 'getUser']),
         new Route('@^(|/)$@', 'get', [$defaultCtrl, 'index']),
