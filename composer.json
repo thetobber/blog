@@ -16,11 +16,7 @@
       "Application\\": "Application/"
     }
   },
-  "autoload-dev": {
-    "files": [
-      "Application/Configuration/Development.php"
-    ]
-  },
+  "autoload-dev": {},
   "require": {},
   "require-dev": {}
 }

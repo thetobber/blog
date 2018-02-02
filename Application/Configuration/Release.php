@@ -6,11 +6,11 @@ session_start([
     'use_strict_mode' => 1,
     'cookie_httponly' => 1,
     'use_only_cookies' => 1,
-    // 'cookie_secure' => 1,
+    'cookie_secure' => 1,
     'referer_check' => 1,
-    // 'gc_maxlifetime' => 3600,
-    // 'cookie_lifetime' => 3600,
-    'cookie_domain' => '.spot.local'
+    'gc_maxlifetime' => 3600,
+    'cookie_lifetime' => 3600,
+    'cookie_domain' => '.tobymw.dk'
 ]);
 
 define('ROOT_DIR', dirname(__DIR__));
