@@ -1,5 +1,5 @@
 <?php
-// ini_set('display_errors', 0);
+ini_set('display_errors', 0);
 
 session_start([
     'name' => 'vf56p3x0',
@@ -19,4 +19,4 @@ define('STATIC_DIR', dirname(ROOT_DIR).'/Static');
 
 define('CONNECTION_STRING', 'mysql:host=localhost;dbname=spot;charset=utf8');
 define('DB_USER', 'spot');
-define('DB_PASS', 'nhQrQQzf7C6mTybsm47Hy4ae');
+define('DB_PASS', 'JW`S$(\&3JG?Ba!A');

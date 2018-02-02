@@ -7,11 +7,12 @@ CREATE SCHEMA `spot`
   COLLATE 'utf8mb4_unicode_ci';
 
 -- Create database user
-CREATE USER 'spot'@'localhost'
-  IDENTIFIED BY 'nhQrQQzf7C6mTybsm47Hy4ae';
+CREATE USER 'spot'@'localhost' IDENTIFIED BY 'JW`S$(\&3JG?Ba!A';
 
 -- Gran EXECUTE privilige to database user
 GRANT EXECUTE ON spot.* TO 'spot'@'localhost';
+-- GRANT ALL PRIVILEGES ON spot.* TO 'tobias'@'%';
+
 
 -- Delete all procedures from this database
 DELETE FROM `mysql`.`proc` WHERE `db` = 'spot' AND `type` = 'PROCEDURE';
