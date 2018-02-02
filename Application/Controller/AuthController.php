@@ -2,7 +2,6 @@
 declare(strict_types = 1);
 namespace Application\Controller;
 
-use stdClass;
 use Application\Message\ServerRequestInterface as Request;
 use Application\Message\ResponseInterface as Response;
 use Application\Repository\UserRepository;

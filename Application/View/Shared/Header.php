@@ -8,6 +8,7 @@ use Application\Security\Authenticator;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/Static/bootstrap.min.css">
+    <link rel="stylesheet" href="/Static/style.css">
     <title><?= $model['title'] ?? 'Spot' ?></title>
 </head>
 <body>
@@ -24,6 +25,9 @@ use Application\Security\Authenticator;
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <?php if (Authenticator::isAuthenticated()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/summary">Post summary</a>
+                    </li>
                     <li class="nav-item ml-sm-auto">
                         <a class="nav-link" href="/profile">Profile</a>
                     </li>

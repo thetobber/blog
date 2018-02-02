@@ -72,7 +72,8 @@ CREATE PROCEDURE GET_POSTS_BY_AUTHOR
 )
 BEGIN
   SELECT * FROM `post`
-  WHERE `author` = inAuthor;
+  WHERE `author` = inAuthor
+  ORDER BY `created` DESC;
 END//
 
 -- Get post by owner procedure
@@ -82,7 +83,8 @@ CREATE PROCEDURE GET_POSTS_BY_OWNER
 )
 BEGIN
   SELECT * FROM `post`
-  WHERE `owner` = inOwner;
+  WHERE `owner` = inOwner
+  ORDER BY `created` DESC;
 END//
 
 -- Update post procedure
@@ -108,6 +110,19 @@ CREATE PROCEDURE DELETE_POST
 BEGIN
   DELETE FROM `post`
   WHERE `id` = inId AND `author` = inAuthor;
+END//
+
+-- Delete post procedure
+CREATE PROCEDURE USER_EXISTS
+(
+  IN inUsername VARCHAR(191)
+)
+BEGIN
+  DECLARE userExists BOOLEAN;
+  SET userExists = false;
+
+  SELECT true INTO userExists FROM `user` WHERE `username` = inUsername;
+  SELECT userExists;
 END//
 
 -- Create user procedure

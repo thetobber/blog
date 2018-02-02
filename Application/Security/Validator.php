@@ -118,9 +118,46 @@ class Validator
         return $errors;
     }
 
-    public static function verifyUsername(string $username): bool
+    public static function verifyCreatePost(array $data): array
+    {
+        $model = [
+            'token' => '',
+            'title' => '',
+            'content' => ''
+        ];
+
+        $model = array_merge($model, $data);
+
+        $errors = [];
+
+        if (!CsrfValidator::verifyToken($model['token'])) {
+            $errors['token'] = true;
+        }
+
+        if (!self::verifyMax191($model['title'])) {
+            $errors['title'] = true;
+        }
+
+        if (!self::verifyMax1000($model['content'])) {
+            $errors['content'] = true;
+        }
+
+        return $errors;
+    }
+
+    public static function verifyMax1000(string $username): bool
+    {
+        return preg_match('@^.{1,1000}$@u', $username) === 1;
+    }
+
+    public static function verifyMax191(string $username): bool
     {
         return preg_match('@^.{1,191}$@u', $username) === 1;
+    }
+
+    public static function verifyUsername(string $username): bool
+    {
+        return self::verifyMax191($username);
     }
 
     public static function verifyEmail(string $email): bool
