@@ -55,7 +55,7 @@ DELIMITER //
 -- Create post procedure
 CREATE PROCEDURE CREATE_POST
 (
-  IN inTitle   TINYINT UNSIGNED,
+  IN inTitle   VARCHAR(191),
   IN inAuthor  VARCHAR(191),
   IN inOwner   VARCHAR(191),
   IN inContent TEXT
